@@ -57,10 +57,9 @@
 <details><summary>Подробнее</summary>
 
 Предполагается, что пользователь установил [Docker](https://docs.docker.com/engine/install/) и [Docker Compose](https://docs.docker.com/compose/install/) на локальной машине или на удаленном сервере, где проект будет запускаться в контейнерах. Проверить наличие можно выполнив команды:
-
-    ```bash
-    docker --version && docker-compose --version
-    ```
+```bash
+docker --version && docker-compose --version
+```
 </details>
 <h1></h1>
 <details><summary>Локальный запуск: Docker Compose</summary>
