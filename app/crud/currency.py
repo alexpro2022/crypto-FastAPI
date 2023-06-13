@@ -1,4 +1,4 @@
-from datetime import datetime as dt, timedelta
+from datetime import timedelta, datetime as dt
 from http import HTTPStatus
 from typing import Any
 

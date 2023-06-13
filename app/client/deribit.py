@@ -30,4 +30,4 @@ async def get_data_from_tickers():
         name = ticker.get('result').get('instrument_name').split('-')[0]
         price = ticker.get('result').get('index_price')
         timestamp = ticker.get('result').get('timestamp')
-        yield name, price, int(timestamp/1000)
+        yield name, price, int(timestamp / 1000)
