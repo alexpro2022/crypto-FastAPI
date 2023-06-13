@@ -1,5 +1,5 @@
-# SECRET_KEY=MY_SECRET_KEY
-# APP_TITLE=
-# APP_DESCRIPTION=
-# POSTGRES_PASSWORD=postgres
-# DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/postgres
+SECRET_KEY=MY_SECRET_KEY
+APP_TITLE=Асинхронный клиент aiohhtp для криптобиржи Deribit и API для обработки сохраненных данных
+APP_DESCRIPTION=Тестовое задание на позицию junior back-end разработчика
+POSTGRES_PASSWORD=postgres
+DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/postgres
