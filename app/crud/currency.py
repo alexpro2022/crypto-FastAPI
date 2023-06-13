@@ -3,7 +3,7 @@ from http import HTTPStatus
 from typing import Any
 
 from fastapi import HTTPException
-from sqlalchemy import and_, select, desc
+from sqlalchemy import and_, desc, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import Base

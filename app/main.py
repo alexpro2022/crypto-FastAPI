@@ -1,9 +1,9 @@
-from fastapi import FastAPI
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from fastapi import FastAPI
 
 from app.api.routers import main_router
-from app.core.config import settings
 from app.client.deribit import get_data_from_tickers
+from app.core.config import settings
 
 app = FastAPI(
     title=settings.app_title,
