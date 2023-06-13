@@ -1,0 +1,5 @@
+# SECRET_KEY=MY_SECRET_KEY
+# APP_TITLE=
+# APP_DESCRIPTION=
+# POSTGRES_PASSWORD=postgres
+# DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/postgres

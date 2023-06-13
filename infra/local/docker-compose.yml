@@ -1,0 +1,30 @@
+services:
+
+  db:
+    image: postgres:15.0-alpine
+    restart: always
+    volumes:
+      - crypto_postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ../../.env
+
+  web:
+    build: ../..
+    restart: always
+    depends_on: 
+      - db 
+    env_file:
+      - ../../.env
+  
+  nginx:
+    image: nginx:1.21.3-alpine
+    restart: always
+    depends_on:
+      - web    
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+
+volumes:
+  crypto_postgres_data:
