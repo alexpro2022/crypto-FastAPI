@@ -3,7 +3,7 @@ from urllib.parse import urljoin
 
 import aiohttp
 
-from .utils import load, log 
+from .utils import load, log
 
 BASE_URL = 'https://test.deribit.com/api/v2/'
 TICKER_ENDPOINT = 'public/ticker?instrument_name='
