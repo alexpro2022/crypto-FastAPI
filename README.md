@@ -1,4 +1,4 @@
-# [Тестовое задание](https://docs.yandex.ru/docs/view?url=ya-disk-public%3A%2F%2FNpKZnE3wuH7Stfm0GV0uDrURjfsXOmlJG5b847EUZFVt4FeMNp77zr2rYYv4qmPHq%2FJ6bpmRyOJonT3VoXnDag%3D%3D&name=%D0%A2%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D0%BE%D0%B5_%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_junior_back_end_%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA.pdf&nosw=1) Crypto Deribit 
+# Crypto Deribit 
 [![Crypto Deribit Test Suite](https://github.com/alexpro2022/crypto-FastAPI/actions/workflows/main.yml/badge.svg)](https://github.com/alexpro2022/crypto-FastAPI/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/alexpro2022/crypto-FastAPI/branch/main/graph/badge.svg?token=3JF5rKLnyD)](https://codecov.io/gh/alexpro2022/crypto-FastAPI)
 
