@@ -35,7 +35,6 @@
 [![docker_compose](https://img.shields.io/badge/-Docker%20Compose-464646?logo=docker)](https://docs.docker.com/compose/)
 [![GitHub_Actions](https://img.shields.io/badge/-GitHub_Actions-464646?logo=GitHub)](https://docs.github.com/en/actions)
 [![Nginx](https://img.shields.io/badge/-NGINX-464646?logo=NGINX)](https://nginx.org/ru/)
-<h1></h1>
 
 [⬆️Оглавление](#оглавление)
 </details>
@@ -58,15 +57,16 @@
 
 ## Установка и запуск:
 Удобно использовать принцип copy-paste - копировать команды из GitHub Readme и вставлять в командную строку Git Bash или IDE (например VSCode).
-#### Предварительные условия:
-<details><summary>Подробнее</summary>
+
+<details><summary>Предварительные условия</summary>
 
 Предполагается, что пользователь установил [Docker](https://docs.docker.com/engine/install/) и [Docker Compose](https://docs.docker.com/compose/install/) на локальной машине или на удаленном сервере, где проект будет запускаться в контейнерах. Проверить наличие можно выполнив команды:
 ```bash
 docker --version && docker-compose --version
 ```
+<h1></h1>    
 </details>
-<h1></h1>
+
 <details><summary>Локальный запуск: Docker Compose</summary>
 
 1. Клонируйте репозиторий с GitHub и введите данные для переменных окружения (значения даны для примера, но их можно оставить):
@@ -92,7 +92,6 @@ docker compose -f infra/local/docker-compose.yml down
 ```bash
 docker compose -f infra/local/docker-compose.yml down -v
 ```
-<h1></h1>
 
 [⬆️Оглавление](#оглавление)
 </details>
@@ -104,7 +103,7 @@ docker compose -f infra/local/docker-compose.yml down -v
 ```bash
 cd .. && rm -fr crypto-FastAPI
 ```
-  
+
 [⬆️Оглавление](#оглавление)
 
 <br>
