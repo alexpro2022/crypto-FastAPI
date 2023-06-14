@@ -6,8 +6,8 @@ from fastapi import HTTPException
 from sqlalchemy import and_, desc, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.db import Base
 from app.core.config import settings
+from app.core.db import Base
 from app.models.currency import Currency
 from app.schemas.currency import CurrencyResponse
 

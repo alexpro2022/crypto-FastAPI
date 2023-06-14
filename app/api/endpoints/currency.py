@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.db import get_async_session
 from app.core.config import settings
+from app.core.db import get_async_session
 from app.crud.currency import currency_crud
 from app.schemas.currency import CurrencyResponse
 
