@@ -1,6 +1,9 @@
 # Crypto Deribit
 [![Crypto Deribit Test Suite](https://github.com/alexpro2022/crypto-FastAPI/actions/workflows/main.yml/badge.svg)](https://github.com/alexpro2022/crypto-FastAPI/actions/workflows/main.yml)
+[![codecov](https://codecov.io/gh/alexpro2022/crypto-FastAPI/branch/main/graph/badge.svg?token=3JF5rKLnyD)](https://codecov.io/gh/alexpro2022/crypto-FastAPI)
+
 ### aiohttp-клиент для криптобиржи Deribit
+
 <br>
 
 ## Оглавление:
