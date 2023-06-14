@@ -3,3 +3,4 @@ APP_TITLE=Асинхронный клиент aiohhtp для криптобир�
 APP_DESCRIPTION=Тестовое задание на позицию junior back-end разработчика
 POSTGRES_PASSWORD=postgres
 DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/postgres
+TIMEDELTA=3  # timedelta in hours to UTC 

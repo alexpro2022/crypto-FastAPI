@@ -1,3 +1,6 @@
+from datetime import datetime as dt
+from datetime import timedelta
+
 from pydantic import BaseSettings
 
 
@@ -12,9 +15,16 @@ class Settings(BaseSettings):
     app_description: str = DEFAULT_STR
     secret_key: str = DEFAULT_STR
     database_url: str = DEFAULT_DB_URL
+    timedelta: int = 3
 
     class Config:
         env_file = '.env'
+
+    def get_timedelta(self):
+        return timedelta(hours=self.timedelta)
+
+    def get_local_time(self):
+        return dt.utcnow() + self.get_timedelta()
 
 
 settings = Settings()

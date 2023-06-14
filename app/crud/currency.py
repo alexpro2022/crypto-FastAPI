@@ -1,5 +1,4 @@
 from datetime import datetime as dt
-from datetime import timedelta
 from http import HTTPStatus
 from typing import Any
 
@@ -8,6 +7,7 @@ from sqlalchemy import and_, desc, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import Base
+from app.core.config import settings
 from app.models.currency import Currency
 from app.schemas.currency import CurrencyResponse
 
@@ -86,8 +86,8 @@ class CurrencyCRUD(CRUD):
     def _validate_dates(
             self, from_date: str, to_date: str) -> tuple[int, int]:
         try:
-            from_date = dt.fromisoformat(from_date) - timedelta(hours=3)
-            to_date = dt.fromisoformat(to_date) - timedelta(hours=3)
+            from_date = dt.fromisoformat(from_date) - settings.get_timedelta()
+            to_date = dt.fromisoformat(to_date) - settings.get_timedelta()
         except ValueError:
             raise HTTPException(HTTPStatus.BAD_REQUEST, self.BAD_REQUEST)
         now = dt.now()

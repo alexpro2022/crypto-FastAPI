@@ -1,9 +1,8 @@
-from datetime import datetime as dt
-
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_async_session
+from app.core.config import settings
 from app.crud.currency import currency_crud
 from app.schemas.currency import CurrencyResponse
 
@@ -44,8 +43,8 @@ async def get_last_price_(
 )
 async def get_filtered_prices_(
     ticker: str = Query(example='btc'),
-    from_date: str = Query(example=dt.now()),
-    to_date: str = Query(example=dt.now()),
+    from_date: str = Query(example=settings.get_local_time()),
+    to_date: str = Query(example=settings.get_local_time()),
     session: AsyncSession = Depends(get_async_session),
 ):
     return await currency_crud.get_filtered_prices(
