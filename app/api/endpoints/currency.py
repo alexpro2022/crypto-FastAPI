@@ -1,3 +1,5 @@
+from datetime import datetime as dt
+
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -42,8 +44,8 @@ async def get_last_price_(
 )
 async def get_filtered_prices_(
     ticker: str = Query(example='btc'),
-    from_date: str = Query(example='2023-06-13T00:05:23'),
-    to_date: str = Query(example='2023-06-13T13:11:23'),
+    from_date: str = Query(example=dt.now()),
+    to_date: str = Query(example=dt.now()),
     session: AsyncSession = Depends(get_async_session),
 ):
     return await currency_crud.get_filtered_prices(
