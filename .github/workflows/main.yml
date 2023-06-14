@@ -36,4 +36,5 @@ jobs:
       - name: Run Tests
         run: |
           python -m flake8
+          pytest --cov --cov-report=xml
    
