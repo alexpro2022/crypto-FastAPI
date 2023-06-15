@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 import aiohttp
 
 from app.core.config import settings
+
 from .utils import load, log
 
 BASE_URL = 'https://test.deribit.com/api/v2/'
