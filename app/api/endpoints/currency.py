@@ -6,11 +6,18 @@ from app.core.db import get_async_session
 from app.crud.currency import currency_crud
 from app.schemas.currency import CurrencyResponse
 
-router = APIRouter(prefix='/currency', tags=['Currencies'])
+
+PREFIX = '/currency'
+ALL = '/all'
+LAST_PRICE = '/last-price'
+PRICES = '/prices'
+ENDPOINTS = [PREFIX + item for item in (ALL, LAST_PRICE, PRICES)]
+
+router = APIRouter(prefix=PREFIX, tags=['Currencies'])
 
 
 @router.get(
-    '/all',
+    ALL,
     response_model=list[CurrencyResponse],
     summary='Получение всех сохраненных данных по указанной валюте.',
     description='Получение всех сохраненных данных по указанной валюте.',
@@ -23,7 +30,7 @@ async def get_currency_data_(
 
 
 @router.get(
-    '/last-price',
+    LAST_PRICE,
     response_model=float,
     summary='Получение последней цены валюты.',
     description='Получение последней цены валюты.',
@@ -36,7 +43,7 @@ async def get_last_price_(
 
 
 @router.get(
-    '/prices',
+    PRICES,
     response_model=list[float],
     summary='Получение цены валюты с фильтром по дате.',
     description='Получение цены валюты с фильтром по дате.',
