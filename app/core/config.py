@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     secret_key: str = DEFAULT_STR
     database_url: str = DEFAULT_DB_URL
     timedelta: int = 3
+    currencies: str = 'BTC ETH'
 
     class Config:
         env_file = '.env'
@@ -25,6 +26,9 @@ class Settings(BaseSettings):
 
     def get_local_time(self):
         return dt.utcnow() + self.get_timedelta()
+
+    def get_currencies(self):
+        return list(set([currency.upper()for currency in self.currencies.split()]))
 
 
 settings = Settings()

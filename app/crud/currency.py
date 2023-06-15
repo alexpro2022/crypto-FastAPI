@@ -71,17 +71,9 @@ class CurrencyCRUD(CRUD):
     def __init__(self) -> None:
         super().__init__(Currency)
 
-    async def get_currency_data(
-        self, session: AsyncSession, currency: str
-    ) -> list[CurrencyResponse]:
-        return await self._get_all_by_attr(
-            session, 'name', currency, exception=True)
-
-    async def get_last_price(
-            self, session: AsyncSession, currency: str) -> float:
-        last = await self._get_by_attr(
-            session, 'name', currency, exception=True)
-        return last.price
+    def _validate_currency(self, currency: str) -> None:
+        if currency not in settings.get_currencies():
+            raise HTTPException(HTTPStatus.NOT_FOUND, self.NOT_FOUND)
 
     def _validate_dates(
             self, from_date: str, to_date: str) -> tuple[int, int]:
@@ -95,10 +87,25 @@ class CurrencyCRUD(CRUD):
             raise HTTPException(HTTPStatus.BAD_REQUEST, self.BAD_REQUEST)
         return [int(item.timestamp()) for item in (from_date, to_date)]
 
+    async def get_currency_data(
+        self, session: AsyncSession, currency: str
+    ) -> list[CurrencyResponse]:
+        self._validate_currency(currency)
+        return await self._get_all_by_attr(
+            session, 'name', currency, exception=True)
+
+    async def get_last_price(
+            self, session: AsyncSession, currency: str) -> float:
+        self._validate_currency(currency)
+        last = await self._get_by_attr(
+            session, 'name', currency, exception=True)
+        return last.price
+
     async def get_filtered_prices(
         self, session: AsyncSession, currency: str,
         from_date: str, to_date: str,
     ) -> list[float]:
+        self._validate_currency(currency)
         res = await session.scalars(
             select(self.model).where(
                 and_(
