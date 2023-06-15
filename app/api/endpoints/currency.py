@@ -6,7 +6,6 @@ from app.core.db import get_async_session
 from app.crud.currency import currency_crud
 from app.schemas.currency import CurrencyResponse
 
-
 PREFIX = '/currency'
 ALL = '/all'
 LAST_PRICE = '/last-price'
