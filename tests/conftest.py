@@ -8,7 +8,8 @@ from app.core.db import Base, get_async_session
 from app.main import app
 from app.models.currency import Currency
 
-from .fake_db_data import FAKE_DB_DATA
+from .fixtures.fake_db_data import FAKE_DB_DATA
+# from .fixtures.data import db_data
 
 SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///./test.db"
 
