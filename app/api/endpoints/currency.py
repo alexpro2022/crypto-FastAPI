@@ -10,7 +10,6 @@ PREFIX = '/currency'
 ALL = '/all'
 LAST_PRICE = '/last-price'
 PRICES = '/prices'
-ENDPOINTS = [PREFIX + item for item in (ALL, LAST_PRICE, PRICES)]
 
 router = APIRouter(prefix=PREFIX, tags=['Currencies'])
 

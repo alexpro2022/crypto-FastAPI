@@ -82,7 +82,7 @@ class CurrencyCRUD(CRUD):
             to_date = dt.fromisoformat(to_date) - settings.get_timedelta()
         except ValueError:
             raise HTTPException(HTTPStatus.BAD_REQUEST, self.BAD_REQUEST)
-        now = dt.now()
+        now = dt.utcnow()
         if from_date > to_date or from_date > now or to_date > now:
             raise HTTPException(HTTPStatus.BAD_REQUEST, self.BAD_REQUEST)
         return [int(item.timestamp()) for item in (from_date, to_date)]
