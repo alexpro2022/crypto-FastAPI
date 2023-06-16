@@ -99,3 +99,4 @@ def test_valid_currencies():
             url = __get_url(PREFIX, endpoint, QUERY_TICKER, currency, filter)
             response = client.get(url)
             assert response.status_code == HTTPStatus.OK, url
+            assert response.json() == list or float
