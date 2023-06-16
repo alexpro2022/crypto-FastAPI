@@ -1,16 +1,16 @@
-from datetime import datetime
 from datetime import timedelta
 from http import HTTPStatus
 
 from fastapi.testclient import TestClient
 
+from app.core.config import settings
 from app.api.endpoints.currency import ALL, LAST_PRICE, PREFIX, PRICES
 from app.main import app
 
 QUERY_TICKER = '?ticker='
 CURRENCIES = ('BTC', 'ETH', 'bTc', 'EtH')
 FILTER_BY_DATES = '&from_date={}&to_date={}'
-NOW = datetime.now()
+NOW = settings.get_local_time()
 PAST = NOW - timedelta(seconds=10)
 FUTURE = NOW + timedelta(seconds=10)
 ENDPOINTS = (
@@ -32,6 +32,7 @@ INVALID_DATES = (
 )
 
 client = TestClient(app)
+
 
 def __get_url(prefix, endpoint, query, currency, filter=None):
     filter = '' if filter is None else filter
@@ -71,7 +72,7 @@ def test_invalid_currency():
             invalid_currency = currency[:-1] if currency else ' '
             url = __get_url(PREFIX, endpoint, QUERY_TICKER, invalid_currency, filter)
             response = client.get(url)
-            assert response.status_code == HTTPStatus.NOT_FOUND, url    
+            assert response.status_code == HTTPStatus.NOT_FOUND, url
             assert response.json() == {'detail': 'Введен неверный тикер валюты - проверьте параметры запроса.'}, url
 
 
@@ -92,9 +93,9 @@ def test_invalid_dates():
             assert response.json() == {'detail': 'Введены неверные даты - проверьте параметры запроса.'}, url
 
 
-'''def test_valid_currencies():
+def test_valid_currencies():
     for endpoint, filter in ENDPOINTS:
         for currency in CURRENCIES:
             url = __get_url(PREFIX, endpoint, QUERY_TICKER, currency, filter)
             response = client.get(url)
-            assert response.status_code == HTTPStatus.OK'''
+            assert response.status_code == HTTPStatus.OK, url
