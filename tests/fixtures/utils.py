@@ -6,8 +6,8 @@ def get_url(prefix, endpoint, query, currency, filter=None):
     return prefix + endpoint + query + currency + filter
 
 
-def get_sorted_response(response):
-    return sorted([each for each in response.json()], key=lambda each: each['timestamp'])
+def get_sorted(arr, each_key: str = 'timestamp', reverse: bool = False):
+    return sorted([each for each in arr], key=lambda each: each[each_key], reverse=reverse)
 
 
 def get_all(currency):

@@ -4,7 +4,7 @@ from http import HTTPStatus
 from app.core.config import settings
 
 from .fixtures.data import client, FILTER_BY_DATES, NOW, PREFIX, PRICES, LAST_PRICE, QUERY_TICKER
-from .fixtures.utils import get_all, get_sorted_response, get_url
+from .fixtures.utils import get_all, get_sorted, get_url
 
 
 def test_get_all_for_currency():
@@ -13,6 +13,7 @@ def test_get_all_for_currency():
         assert response.status_code == HTTPStatus.OK
         all = response.json()
         assert isinstance(all, list)
+        assert all == get_sorted(all, reverse=True)
         for each in all:
             assert isinstance(each, dict)
             assert isinstance(each['id'], int)
@@ -28,8 +29,8 @@ def test_last_price_for_currency():
         assert response.status_code == HTTPStatus.OK, url
         price = response.json()
         assert isinstance(price, float), url
-        response = get_all(currency)
-        assert price == get_sorted_response(response)[-1]['price'], url
+        response = get_all(currency).json()
+        assert price == get_sorted(response)[-1]['price'], url
 
 
 def test_prices():
