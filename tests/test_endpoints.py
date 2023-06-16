@@ -83,4 +83,4 @@ def test_valid_urls():
             url = get_url(PREFIX, endpoint, QUERY_TICKER, currency, filter)
             response = client.get(url)
             assert response.status_code == HTTPStatus.OK, url
-            assert response.json() is list or float
+            assert isinstance(response.json(), list | float)
