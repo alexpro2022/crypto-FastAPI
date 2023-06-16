@@ -3,22 +3,22 @@ from http import HTTPStatus
 
 from app.core.config import settings
 
-from .fixtures.data import ALL, client, PREFIX, PRICES, LAST_PRICE, QUERY_TICKER
-from .fixtures.utils import get_url
+from .fixtures.data import client, FILTER_BY_DATES, NOW, PREFIX, PRICES, LAST_PRICE, QUERY_TICKER
+from .fixtures.utils import get_all, get_sorted_response, get_url
 
 
 def test_get_all_for_currency():
     for currency in settings.get_currencies():
-        url = get_url(PREFIX, ALL, QUERY_TICKER, currency)
-        response = client.get(url)
-        assert response.status_code == HTTPStatus.OK, url
-        assert isinstance(response.json(), list)
-        for each in response.json():
+        response = get_all(currency)
+        assert response.status_code == HTTPStatus.OK
+        all = response.json()
+        assert isinstance(all, list)
+        for each in all:
             assert isinstance(each, dict)
             assert isinstance(each['id'], int)
-            assert each['name'] == currency, url
-            assert isinstance(each['price'], float), url
-            assert isinstance(each['timestamp'], int), url
+            assert each['name'] == currency
+            assert isinstance(each['price'], float)
+            assert isinstance(each['timestamp'], int)
 
 
 def test_last_price_for_currency():
@@ -28,11 +28,17 @@ def test_last_price_for_currency():
         assert response.status_code == HTTPStatus.OK, url
         price = response.json()
         assert isinstance(price, float), url
-        url = get_url(PREFIX, ALL, QUERY_TICKER, currency)
-        response = client.get(url)
-        assert price == sorted([each for each in response.json()], key=lambda each: each['timestamp'])[-1]['price'], url
+        response = get_all(currency)
+        assert price == get_sorted_response(response)[-1]['price'], url
 
 
-'''def test_prices():
+def test_prices():
     for currency in settings.get_currencies():
-        url = get_url(PREFIX, PRICES, QUERY_TICKER, currency)'''
+        for dates in (
+            (NOW, NOW),
+        ):
+            url = get_url(PREFIX, PRICES, QUERY_TICKER, currency, FILTER_BY_DATES.format(*dates))
+            response = client.get(url)
+            assert response.status_code == HTTPStatus.OK
+            prices = response.json()
+            assert isinstance(prices, list)
