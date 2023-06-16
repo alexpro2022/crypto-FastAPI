@@ -54,3 +54,4 @@ async def get_filtered_prices_(
 ):
     return await currency_crud.get_filtered_prices(
         session, ticker.upper(), from_date, to_date)
+

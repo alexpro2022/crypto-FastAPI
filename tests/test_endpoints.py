@@ -56,8 +56,8 @@ def test_invalid_endpoint():
             assert response.status_code == HTTPStatus.NOT_FOUND, url
 
 
-def test_invalid_ticker():
-    invalid_ticker = QUERY_TICKER[:-1] if QUERY_TICKER else ' '
+def test_invalid_query_sintax():
+    invalid_ticker = QUERY_TICKER.replace('c', '') if QUERY_TICKER else ' '
     for endpoint, filter in ENDPOINTS:
         for currency in CURRENCIES:
             url = __get_url(PREFIX, endpoint, invalid_ticker, currency, filter)
@@ -72,10 +72,11 @@ def test_invalid_currency():
             url = __get_url(PREFIX, endpoint, QUERY_TICKER, invalid_currency, filter)
             response = client.get(url)
             assert response.status_code == HTTPStatus.NOT_FOUND, url    
+            assert response.json() == {'detail': 'Введен неверный тикер валюты - проверьте параметры запроса.'}, url
 
 
-def test_invalid_filter():
-    invalid_filter = '&from_date='
+def test_invalid_filter_sintax():
+    invalid_filter = FILTER_BY_DATES.format(NOW, NOW).replace('_', '')
     for currency in CURRENCIES:
         url = __get_url(PREFIX, PRICES, QUERY_TICKER, currency, invalid_filter)
         response = client.get(url)
@@ -88,6 +89,7 @@ def test_invalid_dates():
             url = __get_url(PREFIX, PRICES, QUERY_TICKER, currency, FILTER_BY_DATES.format(*dates))
             response = client.get(url)
             assert response.status_code == HTTPStatus.BAD_REQUEST, url
+            assert response.json() == {'detail': 'Введены неверные даты - проверьте параметры запроса.'}, url
 
 
 '''def test_valid_currencies():

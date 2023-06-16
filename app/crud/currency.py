@@ -65,8 +65,8 @@ class CRUD:
 
 
 class CurrencyCRUD(CRUD):
-    NOT_FOUND = 'Валюта не найдена, проверьте параметры запроса.'
-    BAD_REQUEST = 'Проверьте параметры запроса.'
+    NOT_FOUND = 'Введен неверный тикер валюты - проверьте параметры запроса.'
+    BAD_REQUEST = 'Введены неверные даты - проверьте параметры запроса.'
 
     def __init__(self) -> None:
         super().__init__(Currency)
