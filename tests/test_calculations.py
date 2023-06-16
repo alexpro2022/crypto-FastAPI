@@ -14,10 +14,10 @@ def test_get_all_for_currency():
         assert response.status_code == HTTPStatus.OK, url
         assert isinstance(response.json(), list)
         for each in response.json():
-            assert 'id' in each, url
+            assert isinstance(each['id'], int)
             assert each['name'] == currency, url
-            assert 'price' in each, url
-            assert 'timestamp' in each, url
+            assert isinstance(each['price'], float), url
+            assert isinstance(each['timestamp'], int), url
 
 
 def test_last_price_for_currency():
@@ -25,4 +25,13 @@ def test_last_price_for_currency():
         url = get_url(PREFIX, LAST_PRICE, QUERY_TICKER, currency)
         response = client.get(url)
         assert response.status_code == HTTPStatus.OK, url
-        assert isinstance(response.json(), float)
+        price = response.json()
+        assert isinstance(price, float), url
+        url = get_url(PREFIX, ALL, QUERY_TICKER, currency)
+        response = client.get(url)
+        assert price == sorted([each for each in response.json()], key=lambda each: each['timestamp'])[-1]['price'], url
+
+
+'''def test_prices():
+    for currency in settings.get_currencies():
+        url = get_url(PREFIX, PRICES, QUERY_TICKER, currency)'''
