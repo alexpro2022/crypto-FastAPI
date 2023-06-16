@@ -14,6 +14,7 @@ def test_get_all_for_currency():
         assert response.status_code == HTTPStatus.OK, url
         assert isinstance(response.json(), list)
         for each in response.json():
+            assert isinstance(each, dict)
             assert isinstance(each['id'], int)
             assert each['name'] == currency, url
             assert isinstance(each['price'], float), url
