@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     app_description: str = DEFAULT_STR
     secret_key: str = DEFAULT_STR
     database_url: str = DEFAULT_DB_URL
-    timedelta: int = 3
+    timedelta: int = 0
     currencies: str = 'BTC ETH'
 
     class Config:
