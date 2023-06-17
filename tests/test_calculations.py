@@ -27,7 +27,7 @@ def test_last_price_for_currency():
         assert response.status_code == HTTPStatus.OK, url
         last_price = response.json()
         assert isinstance(last_price, float), url
-        assert last_price == get_sorted(get_all(currency).json())[-1]['price'], url
+        assert last_price == get_all(currency).json()[0]['price'], url
 
 
 def test_prices():
