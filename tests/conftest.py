@@ -20,9 +20,9 @@ TestingSessionLocal = sessionmaker(
 
 
 async def load_db():
-    db_data = [Currency(name=d['name'], price=d['price'], timestamp=d['timestamp']) for d in TEST_DB_DATA]
     async with TestingSessionLocal() as session:
-        session.add_all(db_data)
+        test_data = set([Currency(**data) for data in TEST_DB_DATA])
+        session.add_all(test_data)
         await session.commit()
 
 

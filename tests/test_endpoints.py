@@ -2,7 +2,7 @@ from datetime import timedelta
 from http import HTTPStatus
 
 from .fixtures.data import client, FILTER_BY_DATES, PREFIX, PRICES, QUERY_TICKER, NOW, ENDPOINTS
-from .fixtures.utils import get_url
+from .utils import get_url
 
 
 CURRENCIES = ('BTC', 'ETH', 'bTc', 'EtH')
