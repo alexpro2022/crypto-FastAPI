@@ -1,4 +1,4 @@
-FAKE_DB_DATA = [
+BTC_TEST_DATA = [
   {
       "id": 964,
       "name": "BTC",
@@ -233,6 +233,9 @@ FAKE_DB_DATA = [
       "price": 25564.73,
       "timestamp": 1686921273
     },
+]
+
+ETH_TEST_DATA = [
   {
       "id": 1325,
       "name": "ETH",
@@ -522,3 +525,5 @@ FAKE_DB_DATA = [
       "timestamp": 1686934833
     },   
 ]
+
+TEST_DB_DATA = BTC_TEST_DATA + ETH_TEST_DATA
