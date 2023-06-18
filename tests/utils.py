@@ -7,6 +7,16 @@ from .fixtures.data import ALL, client, PREFIX, QUERY_TICKER
 from .fixtures.test_db_data import BTC_TEST_DATA, ETH_TEST_DATA
 
 
+def get_invalid(item: str = ''):
+    ins = '-invalid-'
+    ret = ['', ' ', ins]
+    if len(item) > 1:
+        item: list = list(item)
+        item.insert(1, ins)
+        ret.append(''.join(item))
+    return ret
+
+
 def get_url(prefix: str, endpoint: str, query: str, currency: str, filter=None) -> str:
     filter = '' if filter is None else filter
     return prefix + endpoint + query + currency + filter

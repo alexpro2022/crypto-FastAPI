@@ -1,8 +1,12 @@
 from fastapi.testclient import TestClient
 
 from app.core.config import settings
-from app.api.endpoints.currency import ALL, LAST_PRICE, PREFIX, PRICES  # noqa
 from app.main import app
+
+PREFIX = '/currency'
+ALL = '/all'
+LAST_PRICE = '/last-price'
+PRICES = '/prices'
 
 FILTER_BY_DATES = '&from_date={}&to_date={}'
 QUERY_TICKER = '?ticker='
