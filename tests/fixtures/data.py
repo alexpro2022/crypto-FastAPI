@@ -7,14 +7,20 @@ PREFIX = '/currency'
 ALL = '/all'
 LAST_PRICE = '/last-price'
 PRICES = '/prices'
-
-FILTER_BY_DATES = '&from_date={}&to_date={}'
-QUERY_TICKER = '?ticker='
+TICKER = 'ticker'
+GET = 'GET'
+FROM_DATE = 'from_date'
+TO_DATE = 'to_date'
 NOW = settings.get_local_time()
+
+client = TestClient(app)
+
+
+'''FILTER_BY_DATES = '&from_date={}&to_date={}'
+QUERY_TICKER = '?ticker='
+
 ENDPOINTS = (
     (PRICES, FILTER_BY_DATES.format(NOW, NOW)),
     (ALL, None),
     (LAST_PRICE, None),
-)
-
-client = TestClient(app)
+)'''

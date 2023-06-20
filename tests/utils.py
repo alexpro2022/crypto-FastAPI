@@ -1,34 +1,11 @@
 import random
 from typing import Any, Iterable
 
-from httpx import Response
-
-from .fixtures.data import ALL, client, PREFIX, QUERY_TICKER
 from .fixtures.test_db_data import BTC_TEST_DATA, ETH_TEST_DATA
-
-
-def get_invalid(item: str = ''):
-    ins = '-invalid-'
-    ret = ['', ' ', ins]
-    if len(item) > 1:
-        item: list = list(item)
-        item.insert(1, ins)
-        ret.append(''.join(item))
-    return ret
-
-
-def get_url(prefix: str, endpoint: str, query: str, currency: str, filter=None) -> str:
-    filter = '' if filter is None else filter
-    return prefix + endpoint + query + currency + filter
 
 
 def get_sorted(arr: Iterable, each_key: str = 'timestamp', reverse: bool = False) -> list[Any]:
     return sorted([each for each in arr], key=lambda each: each[each_key], reverse=reverse)
-
-
-def get_all(currency: str) -> Response:
-    url = get_url(PREFIX, ALL, QUERY_TICKER, currency)
-    return client.get(url)
 
 
 def compare(response_data, test_data):
@@ -56,12 +33,12 @@ def get_randome_timestamps(test_data: list[dict]) -> tuple[int, int]:
     return min(*timestamps), max(*timestamps)
 
 
-def get_test_prices(test_data: list[dict], from_: int, to_: int) -> list[float]:
-    return [data['price'] for data in test_data if from_ <= data['timestamp'] <= to_]
-
-
 def get_test_data(currency):
     if currency == 'BTC':
         return BTC_TEST_DATA
     elif currency == 'ETH':
         return ETH_TEST_DATA
+
+
+def get_test_prices(currency: str, from_: int, to_: int) -> list[float]:
+    return [data['price'] for data in get_test_data(currency) if from_ <= data['timestamp'] <= to_]

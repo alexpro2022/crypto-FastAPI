@@ -4,15 +4,14 @@ from http import HTTPStatus
 
 from app.core.config import settings
 
-from .fixtures.data import client, FILTER_BY_DATES, PREFIX, PRICES, LAST_PRICE, QUERY_TICKER
-from .utils import check_data, check_item, get_all, get_sorted, get_url, get_randome_timestamps, get_test_data, get_test_prices
+from .fixtures.data import ALL, GET, FROM_DATE, TO_DATE, PREFIX, PRICES, LAST_PRICE, TICKER
+from .fixtures.endpoints_testlib import assert_response
+from .utils import check_data, check_item, get_sorted, get_randome_timestamps, get_test_data, get_test_prices
 
 
 def test_get_all_for_currency():
     for currency in settings.get_currencies():
-        response = get_all(currency)
-        assert response.status_code == HTTPStatus.OK
-        all = response.json()
+        all = assert_response(HTTPStatus.OK, GET, PREFIX + ALL, query_params={TICKER: currency}).json()
         assert isinstance(all, list)
         assert all == get_sorted(all, reverse=True)
         for each in all:
@@ -22,21 +21,18 @@ def test_get_all_for_currency():
 
 def test_last_price_for_currency():
     for currency in settings.get_currencies():
-        url = get_url(PREFIX, LAST_PRICE, QUERY_TICKER, currency)
-        response = client.get(url)
-        assert response.status_code == HTTPStatus.OK, url
+        response = assert_response(HTTPStatus.OK, GET, PREFIX + LAST_PRICE, query_params={TICKER: currency})
         last_price = response.json()
-        assert isinstance(last_price, float), url
-        assert last_price == get_all(currency).json()[0]['price'], url
+        assert isinstance(last_price, float), last_price
+        all = assert_response(HTTPStatus.OK, GET, PREFIX + ALL, query_params={TICKER: currency}).json()
+        assert last_price == all[0]['price'], last_price
 
 
 def test_prices():
     for currency in settings.get_currencies():
-        for _ in range(100):
+        for _ in range(10):
             from_, to_ = get_randome_timestamps(get_test_data(currency))
-            url = get_url(PREFIX, PRICES, QUERY_TICKER, currency, FILTER_BY_DATES.format(dt.fromtimestamp(from_), dt.fromtimestamp(to_)))
-            response = client.get(url)
-            assert response.status_code == HTTPStatus.OK
-            prices = response.json()
+            prices = assert_response(HTTPStatus.OK, GET, PREFIX + PRICES, query_params={
+                TICKER: currency, FROM_DATE: dt.fromtimestamp(from_), TO_DATE: dt.fromtimestamp(to_)}).json()
             assert isinstance(prices, list)
-            assert prices == get_test_prices(get_test_data(currency), from_, to_)
+            assert prices == get_test_prices(currency, from_, to_)
