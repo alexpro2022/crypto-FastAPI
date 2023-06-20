@@ -107,7 +107,7 @@ def assert_response(
     return response
 
 
-def dummy_func(response_json) -> str:
+def __dummy_func(response_json) -> str:
     return 'DONE'
 
 
@@ -117,15 +117,15 @@ def standard_tests(
     path_param: int | str | None = None,
     query_params: dict[str:str] | None = None,
     payload: dict[str:str] | None = None,
-    func: Any | None = None,
-    msg: str | None = None,  # сообщение об ошибке path_param
+    func_check_valid_response: Any | None = None,
+    msg_invalid_path_param: str | None = None,
 ) -> None:
 
     # valid_request_test
     response = assert_response(HTTPStatus.OK, method, endpoint, path_param, query_params, payload)
-    if func is None:
-        func = dummy_func
-    assert func(response.json()) == 'DONE'
+    if func_check_valid_response is None:
+        func_check_valid_response = __dummy_func
+    assert func_check_valid_response(response.json()) == 'DONE'
 
     # invalid_endpoint_test
     for invalid_endpoint in get_invalid(endpoint):
@@ -135,8 +135,8 @@ def standard_tests(
     if path_param is not None:
         for invalid_path_param in get_invalid(path_param):
             response = assert_response(HTTPStatus.NOT_FOUND, method, endpoint, invalid_path_param, query_params, payload)
-            if msg is not None:
-                assert response.json() == {'detail': msg}, response.json()
+            if msg_invalid_path_param is not None:
+                assert response.json() == {'detail': msg_invalid_path_param}, response.json()
 
     # invalid_query_params_keys_test
     if query_params is not None:
