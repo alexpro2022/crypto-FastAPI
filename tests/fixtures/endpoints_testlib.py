@@ -15,12 +15,12 @@ QueryParams: TypeAlias = dict[str:str] | None
 Payload: TypeAlias = dict[str:str] | None
 
 
-def get_invalid_str(item: str) -> str:
+def get_invalid_str() -> str:
     return ('', ' ', '-invalid-')
 
 
-def get_invalid_int(item: int) -> str:
-    return ('0', '-1', '1000000000000000000')
+def get_invalid_int() -> str:
+    return (0, -1, 10**12)
 
 
 def get_invalid_dict_keys(original: dict) -> tuple[dict]:
@@ -34,11 +34,11 @@ def get_invalid_dict_keys(original: dict) -> tuple[dict]:
     return tuple(dicts)
 
 
-def get_invalid(item: int | str | dict) -> tuple[str | dict]:
+def get_invalid(item: int | str | dict) -> tuple[int | str | dict]:
     if isinstance(item, int):
-        return get_invalid_int(item)
+        return get_invalid_int()
     if isinstance(item, str):
-        return get_invalid_str(item)
+        return get_invalid_str()
     if isinstance(item, dict):
         return get_invalid_dict_keys(item)
 
@@ -54,10 +54,10 @@ def strip_slashes(item: str) -> str:
 def create_endpoint(endpoint: str, path_param: PathParam) -> str:
     if endpoint in ('/', '//'):
         if path_param is not None:
-            return f'/{strip_slashes(path_param)}/'
+            return f'/{strip_slashes(str(path_param))}/'
         return '/'
     if path_param is not None:
-        return f'/{strip_slashes(endpoint)}/{strip_slashes(path_param)}/'
+        return f'/{strip_slashes(endpoint)}/{strip_slashes(str(path_param))}/'
     return f'/{strip_slashes(endpoint)}/'
 
 
