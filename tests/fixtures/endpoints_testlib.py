@@ -2,8 +2,11 @@ from http import HTTPStatus
 from typing import Any, TypeAlias
 
 from httpx import Response
+from fastapi.testclient import TestClient
 
-from .data import client
+from app.main import app
+
+client = TestClient(app)
 
 Method: TypeAlias = Response
 Methods: TypeAlias = tuple[Method]
