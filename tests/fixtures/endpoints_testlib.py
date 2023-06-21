@@ -15,23 +15,23 @@ QueryParams: TypeAlias = dict[str:str] | None
 Payload: TypeAlias = dict[str:str] | None
 
 
-def get_invalid_str() -> str:
-    return ('', ' ', '-invalid-')
+def get_invalid_str() -> tuple[str]:
+    return None, '', ' ', '-invalid-'
 
 
-def get_invalid_int() -> str:
-    return (0, -1, 10**12)
+def get_invalid_int() -> tuple[int]:
+    return None, 0, -1, 10**12
 
 
 def get_invalid_dict_keys(original: dict) -> tuple[dict]:
     dicts = []
     for key in original:
-        for invalid_key in ('', ' ', '-invalid-'):
+        for invalid_key in get_invalid_str():
             dd = original.copy()
             value = dd.pop(key)
             dd[invalid_key] = value
             dicts.append(dd)
-    return tuple(dicts)
+    return None, *dicts
 
 
 def get_invalid(item: int | str | dict) -> tuple[int | str | dict]:
@@ -111,7 +111,7 @@ def __dummy_func(response_json) -> str:
     return 'DONE'
 
 
-def standard_tests(
+def valid_values_standard_tests(
     method: str,
     endpoint: str,
     path_param: int | str | None = None,

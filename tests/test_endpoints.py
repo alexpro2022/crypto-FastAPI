@@ -3,7 +3,7 @@ from datetime import timedelta
 from http import HTTPStatus
 
 from .fixtures.data import ALL, GET, FROM_DATE, TO_DATE, LAST_PRICE, NOW, PREFIX, PRICES, TICKER
-from .fixtures.endpoints_testlib import assert_response, standard_tests, invalid_methods_test
+from .fixtures.endpoints_testlib import assert_response, invalid_methods_test, valid_values_standard_tests
 
 # === VALID_DATA ===
 PAST = NOW - timedelta(seconds=10)
@@ -21,8 +21,9 @@ INVALID_METHODS_TO_ENDPOINTS = (
     (INV_METHODS, PREFIX + LAST_PRICE),
     (INV_METHODS, PREFIX + PRICES),
 )
-INVALID_CURRENCIES = ('BT', 'ethC', 'ASD', '', ' ')
+INVALID_CURRENCIES = (None, 'BT', 'ethC', 'ASD', '', ' ')
 INVALID_DATES = (
+    (None, None),
     ('', ' '),
     (NOW, ''),
     (' ', NOW),
@@ -49,7 +50,7 @@ def test_valid_currencies_valid_dates_standard_cases():
                 (GET, PREFIX + LAST_PRICE, None, {TICKER: currency}, None, check_func),
                 (GET, PREFIX + PRICES, None, {TICKER: currency, FROM_DATE: from_, TO_DATE: to_}, None, check_func),
             ):
-                standard_tests(*case)
+                valid_values_standard_tests(*case)
 
 
 def test_invalid_currency():
