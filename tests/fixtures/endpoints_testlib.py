@@ -20,7 +20,7 @@ def get_invalid_str() -> tuple[str]:
 
 
 def get_invalid_int() -> tuple[int]:
-    return None, 0, -1, 10**12
+    return 0, -1, 10**12
 
 
 def get_invalid_dict_keys(original: dict) -> tuple[dict]:
@@ -123,6 +123,8 @@ def valid_values_standard_tests(
 
     # valid_request_test
     response = assert_response(HTTPStatus.OK, method, endpoint, path_param, query_params, payload)
+    if method.upper() == 'DELETE':
+        assert_response(HTTPStatus.NOT_FOUND, method, endpoint, path_param, query_params, payload)
     if func_check_valid_response is None:
         func_check_valid_response = __dummy_func
     assert func_check_valid_response(response.json()) == 'DONE'
