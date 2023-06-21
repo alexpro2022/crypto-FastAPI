@@ -6,22 +6,17 @@ from .fixtures.data import ALL, GET, FROM_DATE, TO_DATE, LAST_PRICE, NOW, PREFIX
 from .fixtures.endpoints_testlib import assert_response, invalid_methods_test, valid_values_standard_tests
 
 # === VALID_DATA ===
+VALID_CURRENCIES = ('BTC', 'ETH', 'bTc', 'EtH')
 PAST = NOW - timedelta(seconds=10)
 FUTURE = NOW + timedelta(seconds=10)
-VALID_CURRENCIES = ('BTC', 'ETH', 'bTc', 'EtH')
 VALID_DATES = (
     (PAST, PAST),
     (PAST, NOW),
     (NOW, NOW),
 )
 # === INVALID_DATA ===
-INV_METHODS = ('post', 'put', 'patch', 'delete')
-INVALID_METHODS_TO_ENDPOINTS = (
-    (INV_METHODS, PREFIX + ALL),
-    (INV_METHODS, PREFIX + LAST_PRICE),
-    (INV_METHODS, PREFIX + PRICES),
-)
 INVALID_CURRENCIES = (None, 'BT', 'ethC', 'ASD', '', ' ')
+INVALID_METHODS = ('post', 'put', 'patch', 'delete')
 INVALID_DATES = (
     (None, None),
     ('', ' '),
@@ -57,9 +52,9 @@ def test_invalid_currency():
     msg = 'Введен неверный тикер валюты - проверьте параметры запроса.'
     for currency in INVALID_CURRENCIES:
         for case in (
-            (GET, PREFIX + ALL, None, {TICKER: currency}, None),
-            (GET, PREFIX + LAST_PRICE, None, {TICKER: currency}, None),
-            (GET, PREFIX + PRICES, None, {TICKER: currency, FROM_DATE: PAST, TO_DATE: NOW}, None),
+            (GET, PREFIX + ALL, None, {TICKER: currency}),
+            (GET, PREFIX + LAST_PRICE, None, {TICKER: currency}),
+            (GET, PREFIX + PRICES, None, {TICKER: currency, FROM_DATE: PAST, TO_DATE: NOW}),
         ):
             response = assert_response(HTTPStatus.NOT_FOUND, *case)
             assert response.json() == {'detail': msg}, response.json()
@@ -70,12 +65,16 @@ def test_invalid_dates():
     currency = 'BTC'
     for from_, to_ in INVALID_DATES:
         for case in (
-            (GET, PREFIX + PRICES, None, {TICKER: currency, FROM_DATE: from_, TO_DATE: to_}, None),
+            (GET, PREFIX + PRICES, None, {TICKER: currency, FROM_DATE: from_, TO_DATE: to_}),
         ):
             response = assert_response(HTTPStatus.BAD_REQUEST, *case)
             assert response.json() == {'detail': msg}, response.json()
 
 
 def test_invalid_methods():
-    for case in INVALID_METHODS_TO_ENDPOINTS:
+    for case in (
+        (INVALID_METHODS, PREFIX + ALL),
+        (INVALID_METHODS, PREFIX + LAST_PRICE),
+        (INVALID_METHODS, PREFIX + PRICES),
+    ):
         invalid_methods_test(*case)
